@@ -26,9 +26,6 @@ app.get('/db', function (request, response) {
     console.log(res.rows[0].name);
     client.end();
   });
-
-  pool.query('SELECT * from test_table', null, function(err, result) {
-  });
 });
 
 app.listen(app.get('port'), function() {
