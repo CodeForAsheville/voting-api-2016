@@ -23,7 +23,7 @@ app.get('/db', function (request, response) {
 
   client.query('SELECT * from test_table', function(err, res) {
     if (err) console.log("Error: " + JSON.stringify(err));
-    console.log(res.rows[0].name);
+    console.log('This is it ' + res.rows[0].id + ":  " + res.rows[0].name);
     client.end();
   });
 });
