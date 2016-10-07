@@ -26,7 +26,7 @@ app.get('/reload', function (request, response) {
     if (err) {
       return console.log(err);
     }
-    parse(input, {delimiter: '\t'}, function(err, output){
+    parse(data, {delimiter: '\t'}, function(err, output){
       console.log("The length of the data is " + output.length);
       console.log("And the first line is " + JSON.stringify(output[0]));
       console.log("And the first line is " + JSON.stringify(output[1]));
