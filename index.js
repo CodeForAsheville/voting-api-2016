@@ -28,6 +28,7 @@ app.get('/reload', function (request, response) {
     }
     console.log("The length of the data is " + data.length);
     console.log("And the first line is " + JSON.stringify(data[0]));
+    console.log("And the first line is " + JSON.stringify(data[1]));
   });
 });
 
