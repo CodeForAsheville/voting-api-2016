@@ -30,6 +30,9 @@ var pool = new Pool(dbConfig);
 app.get('/api', function (request, response) {
   var query = `SELECT * FROM voters WHERE `;
   var useAnd = false;
+  if (!(request.query.fname || request.query.lname)) {
+    throw 'You must specify at least one of fname, lname.';
+  }
   if (request.query.fname) {
     query += 'first_name ilike \'' + request.query.fname + '\'';
     useAnd = true;
@@ -37,8 +40,7 @@ app.get('/api', function (request, response) {
   if (request.query.lname) {
     query +=  ((useAnd)?' AND ':'') + ' last_name ilike \'' + request.query.lname + '\'';
   }
-  query += ' LIMIT 100;';
-  console.log("QUERY: " + query);
+  query += ' LIMIT 1000;';
   var voters = pool.query(query)
   .then( (result) => {
     var rows = result.rows;
@@ -48,7 +50,6 @@ app.get('/api', function (request, response) {
         return (age == parseInt(item.birth_age));
       });
     }
-    console.log("RESULT: " + JSON.stringify(rows));
     response.send(JSON.stringify(rows));
   })
   .catch((err) => {
