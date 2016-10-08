@@ -1,5 +1,7 @@
 var express = require('express');
-var app = express();
+var cors = require('cors');
+var app = express().use('*',cors());
+//const graphQLServer = express().use('*', cors());
 var pg = require('pg');
 var fs = require('fs');
 var pg = require('pg');
