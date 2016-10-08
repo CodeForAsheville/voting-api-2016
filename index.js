@@ -50,11 +50,13 @@ app.get('/api', function (request, response) {
         return (age == parseInt(item.birth_age));
       });
     }
+    response.setHeader('Content-Type', 'application/json');
     response.send(JSON.stringify(rows));
   })
   .catch((err) => {
     if (err) {
       console.log("Got an error: " + JSON.stringify(err));
+      response.setHeader('Content-Type', 'application/json');
       response.send(JSON.stringify(err));
     }
   });
