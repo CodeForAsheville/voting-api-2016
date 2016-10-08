@@ -1,0 +1,100 @@
+  587  wc ncvoter11.txt 
+  588  npm install
+  589  npm local
+  590  heroku local
+  591  git add . --all
+  592  git commit
+  593  git push origin master
+  594  history |grep git
+  595  git push heroku master
+  596  heroku logs --tail
+  597  heroku web local
+  598  heroku local
+  599  heroku logs --tail
+  600  git add . --all
+  601  git commit
+  602  git push heroku master
+  603  heroku logs --tail
+  604  more n
+  605  ls
+  606  more ncvoter11.txt 
+  607  heroku logs --tail
+  608  git add . --all
+  609  git commit
+  610  git push heroku master
+  611  heroku logs --tail
+  612  git add . --all
+  613  git commit -m 'Fix'
+  614  git push heroku master
+  615  heroku logs --tail
+  616  heroku logs --tail
+  617  psql -h ec2-54-235-90-96.compute-1.amazonaws.com -d d59h8c5tcnbcbl -U acrrlrpebgyxur -W
+  618  ls
+  619  psql -h ec2-54-235-90-96.compute-1.amazonaws.com -d d59h8c5tcnbcbl -U acrrlrpebgyxur -W -f fields
+  620  psql -h ec2-54-235-90-96.compute-1.amazonaws.com -d d59h8c5tcnbcbl -U acrrlrpebgyxur -W
+  621  cp fields create_voters_table
+  622  mv fields copy_voters_table
+  623  psql -h ec2-54-235-90-96.compute-1.amazonaws.com -d d59h8c5tcnbcbl -U acrrlrpebgyxur -W -f create_voters_table 
+  624  psql -h ec2-54-235-90-96.compute-1.amazonaws.com -d d59h8c5tcnbcbl -U acrrlrpebgyxur -W -f copy_voters_table 
+  625  psql -h ec2-54-235-90-96.compute-1.amazonaws.com -d d59h8c5tcnbcbl -U acrrlrpebgyxur -W
+  626  fidential_ind, age, ncid, vtd_abbrv, vtd_desc)
+  627  FROM '/Users/ericjackson/Dev/CfA/voting-hackathon/cfa-voting-api-2016/ncvoters.txt' DELIMITER '\t' CSV HEADER;
+  628  history
+  629  psql -h ec2-54-235-90-96.compute-1.amazonaws.com -d d59h8c5tcnbcbl -U acrrlrpebgyxur -W
+  630  fg
+  631  psql -h ec2-54-235-90-96.compute-1.amazonaws.com -d d59h8c5tcnbcbl -U acrrlrpebgyxur -W
+  632  psql -h ec2-54-235-90-96.compute-1.amazonaws.com -d d59h8c5tcnbcbl -U acrrlrpebgyxur -W -f create_voters_table 
+  633  cp ncvoter11.txt ncvoter11.csv
+  634  open ncvoter11.csv 
+  635  which enca
+  636  enca
+  637  man -k encoding
+  638  man dd
+  639  cat ncvoter11.txt |dd |more
+  640* man d
+  641  cat ncvoter11.txt |od
+  642  cat ncvoter11.txt |od|more
+  643  man od
+  644  cat ncvoter11.txt |od -t |more
+  645  cat ncvoter11.txt |od -t hex|more
+  646  man od
+  647  cat ncvoter11.txt |od -X |more
+  648  cat ncvoter11.txt |od -x |more
+  649  cat ncvoter11.txt |od -X |more
+  650  ls
+  651  history
+  652  echo $LANG
+  653  iconv
+  654  which iconv
+  655  man iconf
+  656  man iconv
+  657  man iconv
+  658         iconv -f ISO-8859-1 -t UTF-8
+  659  cat ncvoter11.txt | iconf -t UTF-8 > ncvoter11.utf
+  660  cat ncvoter11.txt | iconv -t UTF-8 > ncvoter11.utf
+  661  cat ncvoter11.txt | iconv -f UTF-16 -t UTF-8 > ncvoter11.utf
+  662  more ncvoter11.utf 
+  663  ls
+  664  rm ncvoter11.utf
+  665  cat ncvoter11.txt | iconv -f UTF-8 -t UTF-8 > ncvoter11.utf
+  666  cat ncvoter11.txt | iconv -f utf-8 -t utf-8 > ncvoter11.utf
+  667  head -230 ncvoter11.txt 
+  668  vi ncvoter11.txt 
+  669  ls
+  670  man iconv
+  671  iconv --list
+  672  man iconv
+  673  cat ncvoter11.txt | iconv -f iso-8859-1 -t utf-8 > ncvoter11.utf
+  674  head -230 ncvoter11.utf 
+  675  history
+  676  psql -h ec2-54-235-90-96.compute-1.amazonaws.com -d d59h8c5tcnbcbl -U acrrlrpebgyxur -W -f create_voters_table 
+  677  psql -h ec2-54-235-90-96.compute-1.amazonaws.com -d d59h8c5tcnbcbl -U acrrlrpebgyxur -W
+  678  ls
+  679  more index.js 
+  680  vi .evn
+  681  vi .env
+  682  atom .
+  683  npm uninstall csv-parse
+  684  npm uninstall csv-parse --save
+  685  history
+  686  history | tail -100 > COMMANDS

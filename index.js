@@ -2,7 +2,8 @@ var express = require('express');
 var app = express();
 var pg = require('pg');
 var fs = require('fs');
-var parse = require('csv-parse');
+var pg = require('pg');
+var Pool = pg.Pool;
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -15,33 +16,63 @@ app.set('view engine', 'ejs');
 app.get('/', function(request, response) {
   response.render('pages/index');
 });
-console.log("The DB URL is " + process.env.DATABASE_URL);
-var Client = pg.Client;
 
-var client = new Client(process.env.DATABASE_URL);
-client.connect();
+var dbConfig = {
+  host: 'ec2-54-235-90-96.compute-1.amazonaws.com',
+  user: 'acrrlrpebgyxur',
+  password: 'PhiuOKGIS1XmEGhauBpvzlReob',
+  database: 'd59h8c5tcnbcbl',
+  ssl: true
+};
 
-app.get('/reload', function (request, response) {
-  fs.readFile('./ncvoter11.txt', 'utf8', function (err,data) {
-    if (err) {
-      return console.log(err);
+var pool = new Pool(dbConfig);
+
+app.get('/api', function (request, response) {
+  var query = `SELECT * FROM voters WHERE `;
+  var useAnd = false;
+  if (request.query.fname) {
+    query += 'first_name ilike \'' + request.query.fname + '\'';
+    useAnd = true;
+  }
+  if (request.query.lname) {
+    query +=  ((useAnd)?' AND ':'') + ' last_name ilike \'' + request.query.lname + '\'';
+  }
+  query += ' LIMIT 100;';
+  console.log("QUERY: " + query);
+  var voters = pool.query(query)
+  .then( (result) => {
+    var rows = result.rows;
+    if (request.query.age) {
+      var age = parseInt(request.query.age, 10)
+      rows = result.rows.filter( (item) => {
+        return (age == parseInt(item.birth_age));
+      });
     }
-    parse(data, {delimiter: '\t'}, function(err, output){
-      console.log("The length of the data is " + output.length);
-      console.log("And the first line is " + JSON.stringify(output[0]));
-      console.log("And the first line is " + JSON.stringify(output[1]));
-    });
+    console.log("RESULT: " + JSON.stringify(rows));
+    response.send(JSON.stringify(rows));
+  })
+  .catch((err) => {
+    if (err) {
+      console.log("Got an error: " + JSON.stringify(err));
+      response.send(JSON.stringify(err));
+    }
   });
+
 });
 
-app.get('/db', function (request, response) {
-
-  client.query('SELECT * from test_table', function(err, res) {
-    if (err) console.log("Error: " + JSON.stringify(err));
-    console.log('This is it ' + res.rows[0].id + ":  " + res.rows[0].name);
-    client.end();
-  });
-});
+// var Client = pg.Client;
+//
+// var client = new Client(process.env.DATABASE_URL);
+// client.connect();
+//
+// app.get('/db', function (request, response) {
+//
+//   client.query('SELECT * from test_table', function(err, res) {
+//     if (err) console.log("Error: " + JSON.stringify(err));
+//     console.log('This is it ' + res.rows[0].id + ":  " + res.rows[0].name);
+//     client.end();
+//   });
+// });
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
