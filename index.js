@@ -3,6 +3,9 @@ var app = express();
 var pg = require('pg');
 var fs = require('fs');
 var pg = require('pg');
+var requestFunc = require('request');
+var cheerio = require('cheerio');
+
 var Pool = pg.Pool;
 
 app.set('port', (process.env.PORT || 5000));
@@ -27,7 +30,7 @@ var dbConfig = {
 
 var pool = new Pool(dbConfig);
 
-app.get('/api', function (request, response) {
+var voterQuery = function (request, response) {
   var query = `SELECT * FROM voters WHERE `;
   var useAnd = false;
   if (!(request.query.fname || request.query.lname)) {
@@ -60,7 +63,48 @@ app.get('/api', function (request, response) {
       response.send(JSON.stringify(err));
     }
   });
+}
 
+var ballotQuery = function (request, response) {
+
+  if (!(request.query.voternum)) {
+    response.send('You must specify a voter registration number.');
+  }
+  var url = 'https://vt.ncsbe.gov/voter_search_public/voter_details.aspx?voter_reg_num=';
+  url += request.query.voternum + '&county=11';
+  requestFunc(url, function(error, page, html){
+
+        // First we'll check to make sure no errors occurred when making the request
+
+        if(!error){
+            // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
+
+            var $ = cheerio.load(html);
+            var sballots = $('#sampleballotslist').find('a');
+            var result = {
+              voter_reg_num: request.query.voternum,
+              ballot: 'https://vt.ncsbe.gov/voter_search_public/' + sballots.last('a').attr('href')
+            };
+            response.setHeader('Content-Type', 'application/json');
+            response.send(JSON.stringify(result));
+        }
+        else {
+          response.setHeader('Content-Type', 'application/json');
+          response.send('There was an error querying the NC BOE site.');
+        }
+    })
+}
+
+app.get('/api', function (request, response) {
+  voterQuery(request, response);
+});
+
+app.get('/api/voters', function (request, response) {
+  voterQuery(request, response);
+});
+
+app.get('/api/ballot', function (request, response) {
+  ballotQuery(request, response);
 });
 
 // var Client = pg.Client;
