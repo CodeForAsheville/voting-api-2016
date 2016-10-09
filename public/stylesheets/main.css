@@ -11,6 +11,9 @@
     color: #d9ccee;
     max-width: 75%;
     margin: 1em auto 2em; }
+  .jumbotron a {
+    color: #d9ccee
+  }
   .navbar + .jumbotron {
     margin-top: -20px; }
   .jumbotron .lang-logo {
