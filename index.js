@@ -29,7 +29,7 @@ var dbConfig = {
   database: process.env.DATABASE,
   ssl: true
 };
-
+console.log("this is the newest version with config " + JSON.stringify(dbConfig));
 var pool = new Pool(dbConfig);
 
 var voterQuery = function (request, response) {
