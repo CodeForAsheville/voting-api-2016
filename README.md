@@ -23,8 +23,8 @@ This application follows the [_Getting Started_](https://devcenter.heroku.com/ar
 
 ## Loading data into the database
 We downloaded the individual county dataset we wanted [here](http://www.ncsbe.gov/other-election-related-data) on the NC Board of Elections site. In our case we downloaded ncvoter11.zip and unzipped to ncvoter11.txt. To load into the database (on OSX):
-``
+
   cat ncvoter11.txt | iconv -f iso-8859-1 -t utf-8 > ncvoter11.utf
   psql -h {database-host} -d {database-name} -U {database-user} -W -f create_voters_table
-``
+
 If you are re-loading updated data, you'll need to drop the voters table first.
