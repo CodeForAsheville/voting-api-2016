@@ -27,4 +27,4 @@ We downloaded the individual county dataset we wanted [here](http://www.ncsbe.go
     cat ncvoter11.txt | iconv -f iso-8859-1 -t utf-8 > ncvoter11.utf
     psql -h {database-host} -d {database-name} -U {database-user} -W -f create_voters_table
 
-If you are re-loading updated data, you'll need to drop the voters table first.
+You'll need to update the file name in the COPY command in _create_voters_table_ and, if you are re-loading updated data, you'll need to drop the voters table first.
