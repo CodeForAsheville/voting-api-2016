@@ -23,10 +23,10 @@ app.get('/', function(request, response) {
 });
 
 var dbConfig = {
-  host: 'ec2-54-235-90-96.compute-1.amazonaws.com',
-  user: 'acrrlrpebgyxur',
-  password: 'PhiuOKGIS1XmEGhauBpvzlReob',
-  database: 'd59h8c5tcnbcbl',
+  host: process.env.HOST,
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE,
   ssl: true
 };
 
