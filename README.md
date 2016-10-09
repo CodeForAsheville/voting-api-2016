@@ -1,39 +1,30 @@
-# node-js-getting-started
+# Code for Asheville Voter Information API
 
-A barebones Node.js app using [Express 4](http://expressjs.com/).
+A simple API to get voter registration information and links to sample ballots.
 
-This application supports the [Getting Started with Node on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs) article - check it out.
+## Usage
 
-## Running Locally
+The URL is has two endpoints, '/api/voters' and '/api/ballot' ('/api' is the same as '/api/voters').
 
-Make sure you have [Node.js](http://nodejs.org/) and the [Heroku Toolbelt](https://toolbelt.heroku.com/) installed.
+The voters endpoint takes 3 parameters:
 
-```sh
-$ git clone git@github.com:heroku/node-js-getting-started.git # or clone your own fork
-$ cd node-js-getting-started
-$ npm install
-$ npm start
-```
+    fname – first name
+    lname – last name
+    age – age of voter
 
-Your app should now be running on [localhost:5000](http://localhost:5000/).
+and returns a JSON array of voter registration records. At least one of fname and lname must be specified, while age is optional. For example:
 
-## Deploying to Heroku
+  https://project-url.herokuapp.com/api?lname=jackson&fname=philip&age=54
 
-```
-$ heroku create
-$ git push heroku master
-$ heroku open
-```
-or
+The ballot endpoint takes a single (required) parameter _voternum_, which is the voter registration number and returns a JSON response with the URL of the voter's sample ballot.
 
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+## Installation
+This application follows the [_Getting Started_](https://devcenter.heroku.com/articles/getting-started-with-nodejs#introduction) documentation on Heroku. Clone this repository, create a Heroku app, [add a postgres database](https://devcenter.heroku.com/articles/getting-started-with-nodejs#provision-a-database) and push to Heroku (or run locally).
 
-## Documentation
-
-For more information about using Node.js on Heroku, see these Dev Center articles:
-
-- [Getting Started with Node.js on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
-- [Heroku Node.js Support](https://devcenter.heroku.com/articles/nodejs-support)
-- [Node.js on Heroku](https://devcenter.heroku.com/categories/nodejs)
-- [Best Practices for Node.js Development](https://devcenter.heroku.com/articles/node-best-practices)
-- [Using WebSockets on Heroku with Node.js](https://devcenter.heroku.com/articles/node-websockets)
+## Loading data into the database
+We downloaded the individual county dataset we wanted [here](http://www.ncsbe.gov/other-election-related-data) on the NC Board of Elections site. In our case we downloaded ncvoter11.zip and unzipped to ncvoter11.txt. To load into the database (on OSX):
+``
+  cat ncvoter11.txt | iconv -f iso-8859-1 -t utf-8 > ncvoter11.utf
+  psql -h {database-host} -d {database-name} -U {database-user} -W -f create_voters_table
+``
+If you are re-loading updated data, you'll need to drop the voters table first.
