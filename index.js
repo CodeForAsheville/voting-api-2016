@@ -21,6 +21,7 @@ app.set('view engine', 'ejs');
 app.get('/', function(request, response) {
   response.render('pages/index');
 });
+console.log("this is the newest version with config " + JSON.stringify(dbConfig));
 
 var dbConfig = {
   host: process.env.HOST,
@@ -29,7 +30,6 @@ var dbConfig = {
   database: process.env.DATABASE,
   ssl: true
 };
-console.log("this is the newest version with config " + JSON.stringify(dbConfig));
 var pool = new Pool(dbConfig);
 
 var voterQuery = function (request, response) {
